@@ -104,7 +104,7 @@ for further credits.)
 Not guaranteed to be fit for any particular purpose. Use at your
 own risk. 
 """
-
+import six
 import threading
 
 class SingletonException(Exception):
@@ -185,8 +185,9 @@ class MetaSingleton(type):
         
     def __call__(cls, *lstArgs, **dictArgs):
         raise SingletonException('Singletons may only be instantiated through getInstance()')
-        
-class Singleton(object, metaclass=MetaSingleton):
+
+@six.add_metaclass(MetaSingleton)
+class Singleton(object):
     def getInstance(cls, *lstArgs, **dctKwArgs):
         """
         Call this to instantiate an instance or retrieve the existing instance.
